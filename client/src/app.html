@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Electron</title>
+  </head>
+  <body style="-webkit-app-region: drag">
+    <div id="app"></div>
+    <script>
+      {
+        var script = document.createElement('script');
+        var port = process.env.PORT || 8080;
+        script.src = (process.env.HOT)
+                ? 'http://localhost:' + port + '/bundle.js'
+                : './dist/bundle.js';
+        // HACK: Writing the script path should be done with webpack
+        document.body.appendChild(script);
+      }
+    </script>
+  </body>
+</html>
