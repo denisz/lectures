@@ -5,7 +5,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-	entry: ['./main'],
+	entry: ['babel-polyfill', './main'],
 
 	// 'main.js' in root
 	output: {

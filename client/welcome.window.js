@@ -9,6 +9,7 @@ module.exports = function () {
 		center : true,
 		resizable : false,
 		alwaysOnTop : true,
+		backgroundColor : "#151D25",
 		titleBarStyle: 'hidden'
 	});
 	welcome.loadURL('file://' + __dirname + '/dist/welcome.html');

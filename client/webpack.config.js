@@ -58,6 +58,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './src/assets/data',  to: './data' },
       { from: './src/assets/images', to: './images' },
+      { from: './src/assets/data.zip' },
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
