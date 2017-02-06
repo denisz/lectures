@@ -7,8 +7,11 @@
     "start": "cross-env NODE_ENV=development HOT=1 electron main.js",
     "dev": "cross-env NODE_ENV=development HOT=1 node server.js",
     "postinstall": "webpack -p --config webpack.config.js",
-    "pack": "build --dir",
-    "dist": "build"
+
+    "package": "npm run postinstall && build --publish never",
+    "package-win": "npm run postinstall && build --win --x64",
+    "package-linux": "npm run postinstall && build --linux",
+    "package-all": "npm run postinstall && build -mwl"
   },
   "author": "denis",
   "devDependencies": {
