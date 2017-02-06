@@ -5,8 +5,17 @@
   align-items: center;
   height: 728px;
 
-  .doc-content {
-    width: 842px;
-    flex: 1;
+  @media (min-width: 842px) {
+    .doc-content {
+      width     : 842px;
+      flex      : 1;
+    }
+  }
+
+  @media (max-width: 842px) {
+    .doc-content {
+      width     : 100vw;
+      flex      : 1;
+    }
   }
 }
