@@ -7,3 +7,26 @@
 .no-margin {
   margin: 0;
 }
+
+.vertical-center {
+  min-height  : 100%; /* Fallback for browsers do NOT support vh unit */
+  min-height  : 100vh; /* These two lines are counted as one :-)       */
+  display     : flex;
+  align-items : center;
+}
+
+.vertical-center-half {
+  min-height  : 50%; /* Fallback for browsers do NOT support vh unit */
+  min-height  : 50vh;
+  display     : flex;
+  align-items : center;
+}
+
+.flex {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.background-white {
+  background: white;
+}

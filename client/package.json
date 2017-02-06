@@ -6,8 +6,11 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development HOT=1 electron main.js",
     "dev": "cross-env NODE_ENV=development HOT=1 node server.js",
-    "postinstall": "webpack -p --config webpack.config.js"
+    "postinstall": "webpack -p --config webpack.config.js",
+    "pack": "build --dir",
+    "dist": "build"
   },
+  "author": "denis",
   "devDependencies": {
     "asar": "^0.13.0",
     "assert": "^1.4.1",
@@ -20,6 +23,8 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^3.1.4",
     "css-loader": "^0.23.1",
+    "electron-builder": "^12.3.1",
+    "electron-packager": "^8.5.1",
     "electron-prebuilt": "^0.37.0",
     "express": "^4.13.4",
     "file-loader": "^0.10.0",
@@ -54,5 +59,46 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.10.0"
+  },
+  "build": {
+    "productName": "ElectronReact",
+    "appId": "org.develar.ElectronReact",
+    "category": "public.app-category.tools",
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "files": [
+      "dist/",
+      "node_modules/",
+      "main.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ]
+    }
+  },
+  "directories": {
+    "buildResources": "resources",
+    "output": "release"
+  },
+  "bin": {
+    "electron": "./node_modules/.bin/electron"
   }
 }

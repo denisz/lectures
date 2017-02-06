@@ -21,6 +21,7 @@ var Practice	= require('./components/Practice.react.js');
 var Profile		= require('./components/Profile.react.js');
 var Test 		= require('./components/Tests.react.js');
 var Tests 		= require('./components/Tests.react.js');
+var Menu 		= require('./components/Menu.react.js');
 var NotFound 	= require('./components/NotFound.react.js');
 
 
@@ -42,6 +43,7 @@ var {
 	Route,
 	Redirect,
 	IndexRoute,
+	IndexRedirect,
 	hashHistory,
 	browserHistory
 } = require('react-router');
@@ -62,14 +64,20 @@ render(
 	<IntlProvider locale={locale} messages={window.app[locale]}>
 		<Router history={hashHistory}>
 			<Route path="/" component={App}>
-				<IndexRoute component={Dashboard}/>
+				<IndexRedirect to="/dashboard" />
+
 				<Route path="bootstrap" component={Bootstrap} />
 				<Route path="login" 	component={Login} />
 				<Route path="settings"  component={Settings} />
 				<Route path="dashboard" component={Dashboard}>
+					<IndexRedirect to="/menu" />
+
+					<Route path="/menu" 			component={Menu} />
 					<Route path="/profile" 			component={Profile} />
 					<Route path="/tests" 			component={Tests} />
+					<Route path="/test"		 		component={Test} />
 					<Route path="/test/:id" 		component={Test} />
+					<Route path="/lecture"	 		component={Lecture} />
 					<Route path="/lecture/:id" 		component={Lecture} />
 					<Route path="/lectures" 		component={Lectures} />
 					<Route path="/practice" 		component={Practice} />

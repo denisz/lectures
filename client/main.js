@@ -116,7 +116,7 @@ function createWindow () {
 			}]
 		}, {
 			label: 'View',
-			submenu: (process.env.NODE_ENV === 'development') ? [{
+			submenu: (process.env.NODE_ENV === 'development' || true) ? [{
 				label: 'Reload',
 				accelerator: 'Command+R',
 				click() {

@@ -3,6 +3,6 @@ var _ = require('underscore');
 
 module.exports = React.createClass({
 	render () {
-		return <div />
+		return <div>About</div>
 	}
 })

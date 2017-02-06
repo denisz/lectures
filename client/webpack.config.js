@@ -9,10 +9,11 @@ module.exports = {
   ],
   module: {
     loaders: [
-      { test: /\.js?$/,   loader: 'babel', exclude: /node_modules/ },
-      { test: /\.less$/,  loader: 'style!css!less-loader'},
+      { test: /\.js?$/,   loader: 'babel', exclude: /node_modules/, query: {presets: ['es2015','react']} },
+      { test: /\.less$/,  loader: 'style!css!less'},
       { test: /\.s?css$/, loader: 'style!css!sass' },
       { test: /\.json$/,  loader: 'json-loader'},
+
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,  loader: 'url?limit=10000&mimetype=application/font-woff' },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,   loader: 'url?limit=10000&mimetype=application/octet-stream' },
