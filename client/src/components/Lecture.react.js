@@ -12,4 +12,4 @@ module.exports = React.createClass({
 					</Pager>
 				</div>
 	}
-})
+});

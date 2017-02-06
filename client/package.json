@@ -5,9 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development HOT=1 electron main.js",
+    "prod": "cross-env NODE_ENV=production HOT=0 electron main.js",
     "dev": "cross-env NODE_ENV=development HOT=1 node server.js",
     "postinstall": "webpack -p --config webpack.config.js",
-
     "package": "npm run postinstall && build --publish never",
     "package-win": "npm run postinstall && build --win --x64",
     "package-linux": "npm run postinstall && build --linux",
@@ -15,6 +15,7 @@
   },
   "author": "denis",
   "devDependencies": {
+    "adm-zip": "^0.4.7",
     "asar": "^0.13.0",
     "assert": "^1.4.1",
     "babel-core": "^6.7.6",
@@ -31,6 +32,7 @@
     "electron-prebuilt": "^0.37.0",
     "express": "^4.13.4",
     "file-loader": "^0.10.0",
+    "hash-files": "^1.1.1",
     "html-webpack-plugin": "^2.28.0",
     "intl": "^1.2.4",
     "intl-locales-supported": "^1.0.0",
@@ -53,6 +55,7 @@
     "sass-loader": "^3.2.0",
     "sprintf-js": "^1.0.3",
     "style-loader": "^0.13.1",
+    "temp": "^0.8.3",
     "underscore": "^1.8.3",
     "underscore.path": "^0.1.4",
     "underscore.string": "^3.3.4",
