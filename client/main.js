@@ -1,20 +1,49 @@
-'use strict';
-
+var updater = require('./updater.js');
 var {app, Menu, BrowserWindow, shell} = require('electron');
 
-let menu;
-let template;
-let mainWindow;
+var menu, template, mainWindow;
+
+function createWelcome () {
+	let welcome = new BrowserWindow({
+		show: false,
+		width: 500,
+		height: 300,
+		frame: false,
+		center : true,
+		resizable : false,
+		alwaysOnTop : true,
+		titleBarStyle: 'hidden'
+	});
+	welcome.loadURL('file://' + __dirname + '/dist/welcome.html');
+	welcome.setIgnoreMouseEvents(true);
+	welcome.on('closed', () => {
+		setTimeout(()=> {
+			createWindow();
+		}, 1000)
+	});
+	welcome.webContents.on('did-finish-load', () => {
+		setTimeout(()=>{
+			welcome.show();
+			welcome.focus();
+		}, 1000)
+	});
+
+	updater();
+
+	setTimeout(()=>{
+		welcome.close();
+	}, 10000)
+}
 
 function createWindow () {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		'show' 			: false,
-		'width' 		: 1024,
-		'height' 		: 728,
-		'min-height' 	: 400,
-		'min-width' 	: 842,
-		'titleBarStyle' : 'hidden'
+		show 			: false,
+		width 			: 1024,
+		height 			: 580,
+		minHeight 		: 400,
+		minWidth 		: 842,
+		titleBarStyle 	: 'hidden'
 	});
 
 	// and load the index.html of the app.
@@ -45,13 +74,13 @@ function createWindow () {
 		mainWindow.webContents.on('context-menu', (e, props) => {
 			const { x, y } = props;
 
-		Menu.buildFromTemplate([{
-			label: 'Inspect element',
-			click() {
-				mainWindow.inspectElement(x, y);
-			}
-		}]).popup(mainWindow);
-	});
+			Menu.buildFromTemplate([{
+				label: 'Inspect element',
+				click() {
+					mainWindow.inspectElement(x, y);
+				}
+			}]).popup(mainWindow);
+		});
 	}
 
 	if (process.platform === 'darwin') {
@@ -184,8 +213,10 @@ function createWindow () {
 			}]
 		}];
 
-		menu = Menu.buildFromTemplate(template);
-		Menu.setApplicationMenu(menu);
+		if (process.env.NODE_ENV === 'development') {
+			menu = Menu.buildFromTemplate(template);
+			mainWindow.setMenu(menu);
+		}
 	} else {
 		template = [{
 			label: '&File',
@@ -250,14 +281,17 @@ function createWindow () {
 				}
 			}]
 		}];
-		menu = Menu.buildFromTemplate(template);
-		mainWindow.setMenu(menu);
+
+		if (process.env.NODE_ENV === 'development') {
+			menu = Menu.buildFromTemplate(template);
+			mainWindow.setMenu(menu);
+		}
 	}
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', createWindow);
+app.on('ready', createWelcome);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

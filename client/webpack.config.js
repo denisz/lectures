@@ -14,11 +14,8 @@ module.exports = {
       { test: /\.s?css$/, loader: 'style!css!sass' },
       { test: /\.json$/,  loader: 'json-loader'},
 
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,  loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,   loader: 'url?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,   loader: 'file' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,   loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      { test: /\.woff2?$/, loader: 'url', options: {name: 'fonts/[hash].[ext]', limit: 50000, mimetype: 'application/font-woff'}},
+      { test: /\.(ttf|svg|eot)$/, loader: 'file', options: {name: 'fonts/[hash].[ext]'} },
     ]
   },
   resolve: {
@@ -40,8 +37,14 @@ module.exports = {
       template: './src/app.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      filename: './welcome.html',
+      template: './src/welcome.html',
+      inject: false
+    }),
     new CopyWebpackPlugin([
-      { from: './src/assets/data', to: './data' }
+      { from: './src/assets/data',  to: './data' },
+      { from: './src/assets/images', to: './images' },
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()

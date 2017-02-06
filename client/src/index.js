@@ -23,7 +23,8 @@ var Test 		= require('./components/Tests.react.js');
 var Tests 		= require('./components/Tests.react.js');
 var Menu 		= require('./components/Menu.react.js');
 var NotFound 	= require('./components/NotFound.react.js');
-
+var Logout 		= require('./components/Logout.react.js');
+var Admin 		= require('./components/Admin.react.js');
 
 import './assets/stylesheets/base.less';
 
@@ -68,10 +69,12 @@ render(
 
 				<Route path="bootstrap" component={Bootstrap} />
 				<Route path="login" 	component={Login} />
+				<Route path="logout" 	component={Logout} />
 				<Route path="settings"  component={Settings} />
 				<Route path="dashboard" component={Dashboard}>
 					<IndexRedirect to="/menu" />
 
+					<Route path="/admin" 			component={Admin} />
 					<Route path="/menu" 			component={Menu} />
 					<Route path="/profile" 			component={Profile} />
 					<Route path="/tests" 			component={Tests} />
