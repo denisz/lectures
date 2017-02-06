@@ -1,8 +1,8 @@
 var app 			= require('./electron/app.js');
 var Storage 		= require('./electron/storage.js');
 var Updater 		= require('./electron/updater.js');
-var welcomeWindow 	= require('./electron/welcome.window.js');
-var mainWindow 		= require('./electron/main.window.js');
+var welcomeWindow 	= require('./welcome.window.js');
+var mainWindow 		= require('./main.window.js');
 
 app.on('ready', function () {
 	var window = welcomeWindow().on('closed', mainWindow);

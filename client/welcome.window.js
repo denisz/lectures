@@ -11,7 +11,7 @@ module.exports = function () {
 		alwaysOnTop : true,
 		titleBarStyle: 'hidden'
 	});
-	welcome.loadURL('file://' + __dirname + '/../dist/welcome.html');
+	welcome.loadURL('file://' + __dirname + '/dist/welcome.html');
 	welcome.setIgnoreMouseEvents(true);
 	welcome.webContents.on('did-finish-load', function () {
 		setTimeout(function () {
