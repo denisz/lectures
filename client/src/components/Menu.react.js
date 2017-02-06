@@ -11,7 +11,7 @@ module.exports = withRouter(React.createClass({
 						<NavItem eventKey={"lectures"} 	>Теория</NavItem>
 						<NavItem eventKey={"practice"} 	>Практика</NavItem>
 						<NavItem eventKey={"tests"} 	>Тесты</NavItem>
-						<NavItem eventKey={"links"} 	>Ссылки</NavItem>
+						<NavItem eventKey={"references"}>Ссылки</NavItem>
 						<NavItem eventKey={"other"} 	>Прочее</NavItem>
 						<NavItem eventKey={"about"} 	>О программе</NavItem>
 					</Nav>

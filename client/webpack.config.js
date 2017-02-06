@@ -9,7 +9,7 @@ module.exports = {
   ],
   module: {
     loaders: [
-      { test: /\.js?$/,   loader: 'babel', exclude: /node_modules/, query: {presets: ['es2015','react']} },
+      { test: /\.js?$/,   loader: 'babel', exclude: [/node_modules/, 'electron'], query: {presets: ['es2015','react']} },
       { test: /\.less$/,  loader: 'style!css!less'},
       { test: /\.s?css$/, loader: 'style!css!sass' },
       { test: /\.json$/,  loader: 'json-loader'},
@@ -30,6 +30,19 @@ module.exports = {
     contentBase: './dist',
     hot: true
   },
+  externals: [
+    (function () {
+      var IGNORES = [
+        'electron'
+      ];
+      return function (context, request, callback) {
+        if (IGNORES.indexOf(request) >= 0) {
+          return callback(null, "require('" + request + "')");
+        }
+        return callback();
+      };
+    })()
+  ],
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({

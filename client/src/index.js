@@ -20,6 +20,7 @@ var About 		= require('./components/About.react.js');
 var Practice	= require('./components/Practice.react.js');
 var Profile		= require('./components/Profile.react.js');
 var Test 		= require('./components/Tests.react.js');
+var References  = require('./components/References.react.js');
 var Tests 		= require('./components/Tests.react.js');
 var Menu 		= require('./components/Menu.react.js');
 var NotFound 	= require('./components/NotFound.react.js');
@@ -82,6 +83,7 @@ render(
 					<Route path="/test/:id" 		component={Test} />
 					<Route path="/lecture"	 		component={Lecture} />
 					<Route path="/lecture/:id" 		component={Lecture} />
+					<Route path="/references" 		component={References} />
 					<Route path="/lectures" 		component={Lectures} />
 					<Route path="/practice" 		component={Practice} />
 					<Route path="/other" 			component={Other} />

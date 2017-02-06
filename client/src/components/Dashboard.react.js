@@ -24,6 +24,7 @@ module.exports = withRouter(React.createClass({
 							<Nav pullRight onSelect={this.handlerSelectMenu}>
 								<NavDropdown title="Меню" id="basic-nav-dropdown">
 									<MenuItem eventKey="profile">Профиль</MenuItem>
+									<MenuItem eventKey="admin">Админ панель</MenuItem>
 									<MenuItem eventKey="settings">Настройки</MenuItem>
 									<MenuItem divider />
 									<MenuItem eventKey="logout">Выход</MenuItem>
