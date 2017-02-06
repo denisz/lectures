@@ -4,3 +4,4 @@ node_modules/
 dist/bundle.js
 client/dist/
 client/release/
+electron.js
