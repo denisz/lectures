@@ -3,6 +3,7 @@ var Storage 		= require('./backend/storage.js');
 var Updater 		= require('./backend/updater.js');
 var welcomeWindow 	= require('./backend/welcome.window.js');
 var mainWindow 		= require('./backend/main.window.js');
+var config 			= require('./package.json');
 
 app.on('ready', function () {
 	var window = welcomeWindow().on('closed', mainWindow);

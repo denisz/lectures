@@ -4,7 +4,6 @@ var os = require('os');
 var fs = require('fs');
 var hashFiles = require('hash-files');
 var RSVP = require('rsvp');
-var _ = require('underscore');
 
 function calculateHash (path) {
 	var deferred = RSVP.defer("calculate");
@@ -60,13 +59,9 @@ Updater.prototype.getLocalFile = function () {
 	var path = this.buildZipPath;
 
 	if (fs.existsSync(path)) {
-		_.delay(()=>{
-			deferred.resolve(path);
-		})
+		deferred.resolve(path);
 	} else {
-		_.delay(()=>{
-			deferred.reject(new Error("The computer searched the file system, unfortunately however, the file was not found."));
-		})
+		deferred.reject(new Error("The computer searched the file system, unfortunately however, the file was not found."));
 	}
 
 	return deferred.promise;
@@ -78,13 +73,9 @@ Updater.prototype.getRemoteFile = function () {
 	var path = this.remoteZipPath;
 
 	if (fs.existsSync(path)) {
-		_.delay(()=>{
-			deferred.resolve(path);
-		})
+		deferred.resolve(path);
 	} else {
-		_.delay(()=>{
-			deferred.reject(new Error("The computer searched the file system, unfortunately however, the file was not found."));
-		})
+		deferred.reject(new Error("The computer searched the file system, unfortunately however, the file was not found."));
 	}
 
 	return deferred.promise;
