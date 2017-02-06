@@ -1,7 +1,6 @@
 var path = require('path');
 var fs = require('fs');
 var RSVP = require('rsvp');
-var _ = require('underscore');
 
 var Storage = function () {};
 
