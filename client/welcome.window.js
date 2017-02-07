@@ -15,10 +15,8 @@ module.exports = function () {
 	welcome.loadURL('file://' + __dirname + '/dist/welcome.html');
 	welcome.setIgnoreMouseEvents(true);
 	welcome.webContents.on('did-finish-load', function () {
-		setTimeout(function () {
-			welcome.show();
-			welcome.focus();
-		}, 1000)
+		welcome.show();
+		welcome.focus();
 	});
 
 	return welcome

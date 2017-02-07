@@ -24,14 +24,8 @@ app.on('ready', function () {
 		})
 		.catch((err)=>{
 			dialog.showErrorBox("Error", err.message);
-			if (process.platform !== 'darwin') {
-				app.quit();
-			}
 		})
 });
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
 });
