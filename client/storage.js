@@ -1,14 +1,12 @@
 var path = require('path');
 var fs = require('fs');
-var RSVP = require('rsvp');
 
 var Storage = function () {};
 
 Storage.prototype.loadWithPath = function (path) {
-	var deferred = RSVP.defer("load path");
-
-	deferred.resolve();
-	return deferred.promise;
+	return new Promise((resolve, reject)=>{
+		resolve()
+	});
 };
 
 Storage.prototype.router = function () {
