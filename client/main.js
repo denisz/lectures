@@ -10,6 +10,8 @@ app.on('ready', function () {
 	var updater = new Updater();
 	var storage = new Storage();
 
+	window.on('closed', mainWindow);
+
 	updater
 		.run()
 		.then((path) => {
@@ -19,7 +21,6 @@ app.on('ready', function () {
 			app.use(storage.router());
 			setTimeout(()=>{
 				window.close();
-				mainWindow()
 			}, 4000)
 		})
 		.catch((err)=>{
