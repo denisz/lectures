@@ -6,7 +6,7 @@ var mainWindow 		= require('./main.window.js');
 var {dialog} 		= require('electron');
 
 app.on('ready', function () {
-	var window = welcomeWindow().on('closed', mainWindow);
+	var window = welcomeWindow();
 	var updater = new Updater();
 	var storage = new Storage();
 
@@ -19,7 +19,8 @@ app.on('ready', function () {
 			app.use(storage.router());
 			setTimeout(()=>{
 				window.close();
-			}, 2000)
+				mainWindow()
+			}, 4000)
 		})
 		.catch((err)=>{
 			dialog.showErrorBox("Error", err.message);
