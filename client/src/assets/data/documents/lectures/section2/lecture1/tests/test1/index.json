@@ -1,0 +1,25 @@
+{
+  "question" : "sadasdad",
+  "variants" : [
+    {
+      "type" : "btn",
+      "label": "Вариант 1",
+      "result": 1
+    },
+    {
+      "type" : "btn",
+      "label": "Вариант 2",
+      "result": 1
+    },
+    {
+      "type" : "btn",
+      "label": "Вариант 3",
+      "result": 1
+    },
+    {
+      "type" : "btn",
+      "label": "Вариант 4",
+      "result": 1
+    }
+  ]
+}

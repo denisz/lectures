@@ -1,7 +1,8 @@
 var AdmZip = require('adm-zip');
 var path = require('path');
 var os = require('os');
-var fs = require('fs');
+// var fs = require('fs');
+var fs = require('fs-extra');
 var hashFiles = require('hash-files');
 var hashSettled = require('./hashSettled.js');
 
@@ -23,13 +24,22 @@ function calculateHash (path) {
 function unzip (from, to) {
 	return new Promise((resolve, reject)=>{
 		var zip = new AdmZip(from);
-		var filename = path.basename(from).split(".")[0];
+		var filename 	= path.basename(from).split(".")[0];
+		var target  	= path.join(to, filename);
+		var tmp 		= path.join(to, "tmp_" + filename);
+
+		if (fs.existsSync(target)) {
+			fs.removeSync(tmp);
+			fs.renameSync(target, tmp);
+		}
 
 		zip.extractAllToAsync(to, true, function (error) {
 			if (error != null) {
+				fs.renameSync(tmp, target);
 				reject(error);
 			} else {
-				resolve(path.join(to, filename));
+				resolve(target);
+				fs.removeSync(tmp);
 			}
 		});
 	})
