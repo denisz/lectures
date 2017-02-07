@@ -39,7 +39,7 @@ Storage.prototype.loadWithPath = function (_path) {
 
 					fs.stat(nodePath, (err, stat) => {
 						if (err) return next();
-						console.log("Node path: ", nodePath, "filename: ", filename);
+						// console.log("Node path: ", nodePath, "filename: ", filename);
 
 						if (stat && stat.isDirectory()) {
 							if (filename == "images") return next();
@@ -94,8 +94,8 @@ Storage.prototype.loadWithPath = function (_path) {
 				this.manifest = result.manifest;
 			}
 
-			console.log(JSON.stringify(this.documents, null, '\t'));
-			console.log(JSON.stringify(this.manifest, null, '\t'));
+			// console.log(JSON.stringify(this.documents, null, '\t'));
+			// console.log(JSON.stringify(this.manifest, null, '\t'));
 
 			resolve()
 		});

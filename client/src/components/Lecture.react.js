@@ -1,26 +1,40 @@
 var React = require('react');
-var _ = require('underscore');
-var {Pager, Row, Col} = require('react-bootstrap');
-var Pagination = require('./../services');
+var {Pager} = require('react-bootstrap');
+var {Pagination} = require('./../controllers');
+var {DataStore} = require('./../services');
+var Page = require('./Page.react');
 
 module.exports = React.createClass({
-	propTypes: {
-		model: React.PropTypes.object.required
-	},
+	displayName: "lecture",
 
 	getInitialState() {
+		var lecture = DataStore.lectureById(this.props.params.id);
 		return {
-			// pagination : new Pagination(this.props.model, this)
+			lecture 	: lecture,
+			pagination 	: new Pagination(lecture.pages, this)
 		}
 	},
 
 	render () {
+		var page = this.state.pagination.current();
+
 		return 	<div className="flex">
-					<webview  className="doc-content" src="./data/documents/lecture1/pages/page1/page1.html"/>
-					<Pager>
-						<Pager.Item previous href="#">&larr; Previous Page</Pager.Item>
-						<Pager.Item next href="#">Next Page &rarr;</Pager.Item>
+					<Page model={page} />
+					<Pager onSelect={this.state.pagination.onChange}>
+						<Pager.Item disabled={this.state.pagination.isPrev()} eventKey="previous">Previous</Pager.Item>
+						{' '}
+						<Pager.Item disabled={this.state.pagination.isNext()} eventKey="next">Next</Pager.Item>
 					</Pager>
 				</div>
+	},
+
+	didChangePage (pagination) {
+		this.setState({
+			pagination: pagination
+		})
+	},
+
+	didReachEnd () {
+
 	}
 });

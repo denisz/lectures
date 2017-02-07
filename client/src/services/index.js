@@ -1,4 +1,7 @@
+var DataStore = require('./DataStore.js')
+var Config = require('./Config.js');
+
 module.exports = {
-	Pagination 	: require('./Pagination.js'),
-	DataStore 	: require('./DataStore.js'),
-}
+	DataStore 	: new DataStore(),
+	Config 		: new Config()
+};

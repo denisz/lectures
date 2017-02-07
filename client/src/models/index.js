@@ -1,5 +1,7 @@
 module.exports = {
-	"MTest" 	: require('./MTest'),
-	"MLecture" 	: require('./MLecture'),
-	"MPage" 	: require('./MPage')
+	"Test" 		: require('./Test'),
+	"Lecture" 	: require('./Lecture'),
+	"Page" 		: require('./Page'),
+	"Section" 	: require('./Section'),
+	"Ref" 		: require('./Ref')
 };

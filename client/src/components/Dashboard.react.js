@@ -27,7 +27,6 @@ module.exports = withRouter(React.createClass({
 									<MenuItem eventKey="admin">Админ панель</MenuItem>
 									<MenuItem eventKey="settings">Настройки</MenuItem>
 									<MenuItem divider />
-									<MenuItem eventKey="logout">Kjufen</MenuItem>
 									<MenuItem eventKey="logout">Выход</MenuItem>
 								</NavDropdown>
 							</Nav>
