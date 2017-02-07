@@ -5,8 +5,6 @@ var fs = require('fs');
 var hashFiles = require('hash-files');
 var hashSettled = require('./hashSettled.js');
 
-var {dialog} = require('electron');
-
 function calculateHash (path) {
 	return new Promise((resolve, reject)=>{
 		try {

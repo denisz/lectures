@@ -1,7 +1,7 @@
 var DataStore = function () {};
 
-DataStore.prototype.load = function (manifest) {
-
+DataStore.prototype.load = function (documents) {
+	this.documents = documents;
 };
 
 DataStore.prototype.getAllLectures = function () {

@@ -10,7 +10,7 @@ module.exports = withRouter(React.createClass({
 	render () {
 		return <div className="b-dashboard">
 				<div style={{width: "100%"}}>
-					<Navbar collapseOnSelect className="no-margin background-white">
+					<Navbar collapseOnSelect className="no-margin border-none background-white">
 						<Navbar.Header style={{marginLeft: 50}}>
 							<Navbar.Brand>
 								<a href="#">Bytex-lectures</a>
@@ -27,6 +27,7 @@ module.exports = withRouter(React.createClass({
 									<MenuItem eventKey="admin">Админ панель</MenuItem>
 									<MenuItem eventKey="settings">Настройки</MenuItem>
 									<MenuItem divider />
+									<MenuItem eventKey="logout">Kjufen</MenuItem>
 									<MenuItem eventKey="logout">Выход</MenuItem>
 								</NavDropdown>
 							</Nav>

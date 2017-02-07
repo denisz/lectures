@@ -2,7 +2,7 @@ var {BrowserWindow} = require('electron');
 
 module.exports = function () {
 	let welcome = new BrowserWindow({
-		show: false,
+		show: true,
 		width: 500,
 		height: 300,
 		frame: false,
@@ -14,10 +14,6 @@ module.exports = function () {
 	});
 	welcome.loadURL('file://' + __dirname + '/dist/welcome.html');
 	welcome.setIgnoreMouseEvents(true);
-	welcome.webContents.on('did-finish-load', function () {
-		welcome.show();
-		welcome.focus();
-	});
 
 	return welcome
 };

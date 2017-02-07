@@ -1,16 +1,16 @@
-var app 			= require('./app.js');
-var Storage 		= require('./storage.js');
-var Updater 		= require('./updater.js');
-var welcomeWindow 	= require('./welcome.window.js');
-var mainWindow 		= require('./main.window.js');
-var {dialog} 		= require('electron');
+var app 		= require('./app.js');
+var Storage 	= require('./storage.js');
+var Updater 	= require('./updater.js');
+var welcome 	= require('./welcome.window.js');
+var main 		= require('./main.window.js');
+var {dialog} 	= require('electron');
 
 app.on('ready', function () {
-	var window = welcomeWindow();
+	var window = welcome();
 	var updater = new Updater();
 	var storage = new Storage();
 
-	window.on('closed', mainWindow);
+	window.on('closed', main);
 
 	updater
 		.run()
@@ -27,3 +27,5 @@ app.on('ready', function () {
 			dialog.showErrorBox("Error", err.message);
 		})
 });
+
+app.on('window-all-closed', function () {});

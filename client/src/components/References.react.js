@@ -3,6 +3,8 @@ var _ = require('underscore');
 
 module.exports = React.createClass({
 	render () {
-		return <div />
+		return <div>
+					<h3>References</h3>
+				</div>
 	}
-})
+});
