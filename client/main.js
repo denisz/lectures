@@ -27,6 +27,3 @@ app.on('ready', function () {
 			dialog.showErrorBox("Error", err.message);
 		})
 });
-
-app.on('window-all-closed', function () {
-});
