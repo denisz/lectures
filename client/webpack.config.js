@@ -56,7 +56,7 @@ module.exports = {
       inject: false
     }),
     new CopyWebpackPlugin([
-      { from: './src/assets/data',  to: './data' },
+      { from: './src/assets/static', to: './static' },
       { from: './src/assets/images', to: './images' },
       { from: './src/assets/data.zip' },
     ]),

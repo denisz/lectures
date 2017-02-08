@@ -4,6 +4,7 @@ var Updater 	= require('./updater.js');
 var welcome 	= require('./welcome.window.js');
 var main 		= require('./main.window.js');
 var {dialog} 	= require('electron');
+var social 		= require('./social.js');
 
 app.on('ready', function () {
 	var window = welcome();
@@ -29,3 +30,5 @@ app.on('ready', function () {
 });
 
 app.on('window-all-closed', function () {});
+
+app.use(social);

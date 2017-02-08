@@ -3,6 +3,7 @@
  */
 
 'use strict';
+import './assets/stylesheets/base.less';
 
 var React 		= require('react');
 var {render} 	= require('react-dom');
@@ -26,8 +27,9 @@ var Menu 		= require('./components/Menu.react.js');
 var NotFound 	= require('./components/NotFound.react.js');
 var Logout 		= require('./components/Logout.react.js');
 var Admin 		= require('./components/Admin.react.js');
+var Rules 		= require('./components/Rules.react.js');
 
-import './assets/stylesheets/base.less';
+var {User} = require('./services');
 
 var RSVP = require('rsvp');
 
@@ -62,17 +64,32 @@ addLocaleData([...enLocaleData, ...ruLocaleData]);
 
 bootstrap();
 
+function requireAuth(nextState, replace) {
+	if (!User.current()) {
+		replace({
+			pathname: '/login',
+			state: { nextPathname: nextState.location.pathname }
+		})
+	}
+}
+
+function requireAnonymous(nextState, replace) {
+	if (User.current()) {
+		replace('/')
+	}
+}
+
 render(
 	<IntlProvider locale={locale} messages={window.app[locale]}>
 		<Router history={hashHistory}>
 			<Route path="/" component={App}>
 				<IndexRedirect to="/dashboard" />
-
+				<Route path="login" 	component={Login} onEnter={requireAnonymous}/>
 				<Route path="bootstrap" component={Bootstrap} />
-				<Route path="login" 	component={Login} />
 				<Route path="logout" 	component={Logout} />
 				<Route path="settings"  component={Settings} />
-				<Route path="dashboard" component={Dashboard}>
+				<Route path="rules"  	component={Rules} />
+				<Route path="dashboard" component={Dashboard} onEnter={requireAuth}>
 					<IndexRedirect to="/menu" />
 
 					<Route path="/admin" 			component={Admin} />

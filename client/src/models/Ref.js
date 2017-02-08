@@ -1,11 +1,14 @@
+var _ = require('underscore');
+
 var proto = {
-	name  : null,
-	label : "",
-	link  : ""
+	html 	: "",
+	format : ""
 };
 
-module.exports = ()=> {
+module.exports = (defaults)=>{
 	var model = Object.assign({}, proto);
-
-	return model
+	model = _.defaults(model, defaults);
+	model.lectures = [];
+	model.id = _.uniqueId("ref_");
+	return model;
 };

@@ -1,4 +1,4 @@
-var {Lecture, Test, Page, Section } = require('./../models');
+var {Lecture, Test, Page, Section, Ref } = require('./../models');
 var _ = require('underscore');
 
 var DataStore = function () {
@@ -6,10 +6,13 @@ var DataStore = function () {
 	this._lectures = [];
 	this._pages    = [];
 	this._tests    = [];
+	this._refs     = [];
 };
 
 DataStore.prototype.loadData = function (data) {
-	var sections = [];
+
+	this._refs = data.references;
+
 
 	for (var i in data.sections) {
 		var _section = data.sections[i];
@@ -46,14 +49,16 @@ DataStore.prototype.loadData = function (data) {
 			section.lectures.push(lecture);
 			this._lectures.push(lecture);
 		}
-		sections.push(section)
+		this._sections.push(section)
 	}
-
-	this._sections = sections;
 };
 
 DataStore.prototype.sections = function () {
 	return this._sections
+};
+
+DataStore.prototype.references = function () {
+	return this._refs
 };
 
 DataStore.prototype.lectureById = function (id) {
