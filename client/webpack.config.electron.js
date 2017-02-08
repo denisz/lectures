@@ -5,7 +5,15 @@
 var webpack = require('webpack');
 
 module.exports = {
-	entry: ['babel-polyfill', './main'],
+	// entry: ['babel-polyfill', './main'],
+	entry: './main',
+
+	module: {
+		loaders : [
+			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+			{ test: /\.json$/,  loader: 'json-loader'}
+		]
+	},
 
 	// 'main.js' in root
 	output: {

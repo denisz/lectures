@@ -1,12 +1,13 @@
 var FB = require('fb');
 var events = require('events');
-var eventEmitter = new events.EventEmitter();
 var twitterAPI = require('node-twitter-api');
 var {BrowserWindow} = require('electron');
 var _ = require('underscore');
 var url = require('url');
 var qs = require('querystring');
 var http = require('https');
+
+var {dialog} 	= require('electron');
 
 module.exports = {
 	'app-facebook-login' : (event, callback)=>{
@@ -39,9 +40,9 @@ module.exports = {
 					authWindow.close();
 				});
 			} else {
-				console.log(error);
-				event.sender.send(callback, false);
-				authWindow.close();
+				// dialog.showErrorBox("Error", error);
+				// event.sender.send(callback, false);
+				// authWindow.close();
 			}
 		}
 
@@ -61,6 +62,7 @@ module.exports = {
 			callback: 'http://example/callback'
 		});
 
+		var eventEmitter = new events.EventEmitter();
 		var oAuthRequestToken;
 		var oAuthRequestTokenSecret;
 
