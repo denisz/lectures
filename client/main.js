@@ -11,7 +11,13 @@ app.on('ready', function () {
 	var updater = new Updater();
 	var storage = new Storage();
 
-	window.on('closed', main);
+	window.on('closed', ()=>{
+		window = main();
+		window.on('close', ()=>{
+			app.quit();
+		})
+	});
+
 
 	updater
 		.run()
