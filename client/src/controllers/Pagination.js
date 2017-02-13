@@ -6,6 +6,8 @@ var Pagination = function (pages, delegate) {
 	this.delegate = delegate;
 
 	this.onChange = _.bind(this.onChange, this);
+	this.prev = _.bind(this.prev, this);
+	this.next = _.bind(this.next, this);
 };
 
 Pagination.prototype.current = function () {
@@ -25,7 +27,7 @@ Pagination.prototype.next = function () {
 		this.delegate.didChangePage(this);
 	}
 
-	if (!this.isNext()) {
+	if (this.isEnd()) {
 		if (this.delegate && _.isFunction(this.delegate.didReachEnd)) {
 			this.delegate.didReachEnd(this);
 		}
@@ -40,10 +42,18 @@ Pagination.prototype.prev = function () {
 };
 
 Pagination.prototype.isNext = function () {
+	return this.index < this.max();
+};
+
+Pagination.prototype.isEnd = function () {
 	return this.index == this.max();
 };
 
 Pagination.prototype.isPrev = function () {
+	return this.index > 0;
+};
+
+Pagination.prototype.isStart = function () {
 	return this.index == 0;
 };
 

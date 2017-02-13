@@ -1,4 +1,4 @@
-var {Lecture, Test, Page, Section, Ref } = require('./../models');
+var {Lecture, Test, Page, Section, Ref, Item } = require('./../models');
 var _ = require('underscore');
 
 var DataStore = function () {
@@ -10,7 +10,7 @@ var DataStore = function () {
 };
 
 DataStore.prototype.loadData = function (data) {
-
+	console.log("Settings: ", data);
 	this._refs = data.references;
 
 
@@ -35,14 +35,19 @@ DataStore.prototype.loadData = function (data) {
 				this._pages.push(page);
 			}
 
-			for (var p in _lecture.tests) {
-				var _test = _lecture.tests[p];
-				var test = Test(_test.manifest);
+			if (_lecture.test) {
+				var test = Test(_lecture.test.manifest);
+				lecture.test = test;
 
-				test.path   = _test.path;
-				test.format = _test.format;
-				test.name 	= p;
-				lecture.tests.push(test);
+				for (var i in _lecture.test.items) {
+					var _item = _lecture.test.items[i];
+					var item = Item(_item.manifest);
+					item.path = _item.path;
+					item.format = _item.format;
+
+					test.items.push(item)
+				}
+
 				this._tests.push(test);
 			}
 

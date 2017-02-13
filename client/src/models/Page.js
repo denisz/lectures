@@ -1,7 +1,6 @@
 var _ = require('underscore');
 
 var proto = {
-	id 		: 0,
 	name 	: null,
 	path 	: null,
 	format 	: null
@@ -9,7 +8,6 @@ var proto = {
 
 module.exports = (defaults)=>{
 	var model = Object.assign({}, proto);
-	model = _.defaults(model, defaults);
-	model.id = _.uniqueId("page_");
+	model = _.defaults(model, defaults, {id: _.uniqueId("page_")});
 	return model;
 };

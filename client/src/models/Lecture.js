@@ -1,12 +1,11 @@
 var _ = require('underscore');
 var Proto = {
-	id 		 : 0,
 	name 	 : null,
 	title 	 : "",
 	synopsis : "",
 	image 	 : "",
 	pages	 : null,
-	tests 	 : null
+	test 	 : null
 };
 
 /**
@@ -15,9 +14,8 @@ var Proto = {
  */
 module.exports = (defaults)=>{
 	var model = Object.assign({}, Proto);
-	model = _.defaults(model, defaults);
+	model = _.defaults(model, defaults, {id: _.uniqueId("lecture_")});
 	model.pages = [];
-	model.tests = [];
-	model.id = _.uniqueId("lecture_");
+	model.test = null;
 	return model;
 };

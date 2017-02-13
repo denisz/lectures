@@ -3,5 +3,6 @@ module.exports = {
 	"Lecture" 	: require('./Lecture'),
 	"Page" 		: require('./Page'),
 	"Section" 	: require('./Section'),
-	"Ref" 		: require('./Ref')
+	"Ref" 		: require('./Ref'),
+	"Item" 		: require('./Item')
 };
