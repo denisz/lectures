@@ -9,10 +9,12 @@ module.exports = withRouter(React.createClass({
 	displayName: "lectures",
 
 	render () {
-
 		var sections = DataStore.sections();
 
+		var tests = _.pluck(sections, "lectures");
+
 		return 	<div className="b-lectures">
+			<h3 className="text-center">Лекции</h3>
 			{
 				sections.map((i, idx)=>{
 					return <Media key={idx}>

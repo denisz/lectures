@@ -38,12 +38,14 @@ DataStore.prototype.loadData = function (data) {
 			if (_lecture.test) {
 				var test = Test(_lecture.test.manifest);
 				lecture.test = test;
+				test.lecture = lecture;
 
 				for (var i in _lecture.test.items) {
 					var _item = _lecture.test.items[i];
 					var item = Item(_item.manifest);
-					item.path = _item.path;
+					item.path 	= _item.path;
 					item.format = _item.format;
+					item.name 	= i;
 
 					test.items.push(item)
 				}
@@ -60,6 +62,10 @@ DataStore.prototype.loadData = function (data) {
 
 DataStore.prototype.sections = function () {
 	return this._sections
+};
+
+DataStore.prototype.tests = function () {
+	return this._tests
 };
 
 DataStore.prototype.references = function () {
