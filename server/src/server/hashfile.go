@@ -3,16 +3,18 @@ package server
 import (
 	"crypto/sha256"
 	"io/ioutil"
+	"encoding/hex"
 )
 
-func Hash(filename string) ([]byte, error) {
+func Hash(filename string) (string, error) {
 	bytes, err := ioutil.ReadFile(filename)
 
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	sha_256 := sha256.New()
 	sha_256.Write(bytes)
-	return  sha_256.Sum(nil), nil
+
+	return hex.EncodeToString(sha_256.Sum(nil)), nil
 }

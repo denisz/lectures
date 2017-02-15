@@ -13,9 +13,10 @@ type Config struct {
 		VK_APP_ID     string
 		VK_SECRET_KEY string
 	}
-	DB struct {
-		path string
-	}
+	Db string
+	Port int
+	User string
+	Pass string
 }
 
 func LoadConfig(filename string) (*Config, error) {

@@ -1,0 +1,9 @@
+social:
+ fb_app_id: 368451330207620
+ fb_secret_key: 48328d10aace967c7fc4d7031907d07f
+ vk_app_id: 5498445
+ vk_secret_key: hgzLVKdje8JRig2QfuCl
+port : 8083
+db: my.db
+user: "admin"
+pass: "admin"

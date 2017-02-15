@@ -7,6 +7,8 @@ function login (event) {
 
 	return new Promise((resolve, reject)=>{
 		ipcRenderer.on(callback, (event, user)=>{
+			console.log("social:", user);
+
 			if (user == false) {
 				reject()
 			} else {

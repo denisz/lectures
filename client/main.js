@@ -13,11 +13,10 @@ app.on('ready', function () {
 
 	window.on('closed', ()=>{
 		window = main();
-		window.on('close', ()=>{
+		window.on('closed', ()=>{
 			app.quit();
 		})
 	});
-
 
 	updater
 		.run()
