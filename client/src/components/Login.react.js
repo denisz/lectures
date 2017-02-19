@@ -74,27 +74,31 @@ module.exports = withRouter(React.createClass({
 		</div>
 	},
 
+	handlerSuccess () {
+		this.props.router.push("/");
+	},
+
+	handlerError (error) {
+		console.log(error);
+	},
+
 	didTapContinue(user) {
-		User.setCurrent(user).then(()=>{
-			this.props.router.push("/");
-		})
+		User.loginWithLocal(user)
+			.then(this.handlerSuccess, this.handlerError)
 	},
 
 	didTapTwitter () {
-		User.loginWithTwitter().then(()=>{
-			this.props.router.push("/");
-		})
+		User.loginWithTwitter()
+			.then(this.handlerSuccess, this.handlerError)
 	},
 
 	didTapVkontakte () {
-		User.loginWithVkontakte().then(()=>{
-			this.props.router.push("/");
-		})
+		User.loginWithVkontakte()
+			.then(this.handlerSuccess, this.handlerError)
 	},
 
 	didTapFacebook () {
-		User.loginWithFacebook().then(()=>{
-			this.props.router.push("/");
-		})
+		User.loginWithFacebook()
+			.then(this.handlerSuccess, this.handlerError)
 	}
 }));

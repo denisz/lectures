@@ -1,6 +1,9 @@
-var current  = null;
-var _ = require('underscore');
-var SocialProvider = require('./SocialProvider.js');
+var current  		= null;
+var _ 				= require('underscore');
+var SocialProvider 	= require('./SocialProvider.js');
+var Router 			= require('./Router');
+var fetch 			= require('./Fetch');
+var Session 		= require('./Session');
 
 function savedIdUsers () {
 	var ids = localStorage.getItem("saved") || "";
@@ -13,6 +16,8 @@ var User = function () {
 	this.socialId 	= null;
 	this.id 		= null;
 	this.provider   = null;
+	this.sessionID  = null;
+	this.admin 		= false;
 };
 
 User.prototype.save = function () {
@@ -23,7 +28,9 @@ User.prototype.save = function () {
 			picture 	: this.picture,
 			socialId 	: this.socialId,
 			id  		: this.id,
-			provider    : this.provider
+			provider    : this.provider,
+			sessionID   : this.sessionID,
+			admin 		: this.admin
 		}));
 
 		var users = _.union(savedIdUsers(), [key]);
@@ -52,24 +59,59 @@ User.setCurrent = function (user) {
 	return new Promise((resolve, reject)=>{
 		current = new User();
 
+		current.id 		 = user.id;
 		current.name 	 = user.name;
 		current.picture  = user.picture;
 		current.socialId = user.socialId;
 		current.provider = user.provider;
+		current.admin 	 = user.admin;
 
+		console.log("user:", user);
 		resolve(current);
 	})
+};
+
+User.resolveWithServer = function (user) {
+	var request = Router.register(
+		  user.provider
+		, user.token
+		, user.socialId
+		, user.name
+		, user.picture);
+
+	return fetch(request)
+		.then((res)=>{
+			if (res.Session) {
+				User.SetCurrentSessionId(res.Session.ID);
+			}
+			user.id 	= res.User.ID;
+			user.admin 	= res.User.Admin;
+
+			return user;
+		})
+};
+
+User.SetCurrentSessionId = function (id) {
+	var clientSession = new Session();
+	clientSession.id  = id;
+	Session.setCurrentSession(clientSession);
+};
+
+User.saveUser = function (user) {
+	return user.save();
+};
+
+User.loginWithLocal = function (user) {
+	User.SetCurrentSessionId(user.sessionID);
+	return User.setCurrent(user);
 };
 
 User.loginWithFacebook = function () {
 	return new Promise((resolve, reject)=>{
 		SocialProvider.facebookLogin()
-			.then((user)=>{
-				return User.setCurrent(user);
-			})
-			.then((user)=>{
-				return user.save();
-			})
+			.then(User.resolveWithServer)
+			.then(User.setCurrent)
+			.then(User.saveUser)
 			.then(resolve, reject)
 	})
 };
@@ -77,12 +119,9 @@ User.loginWithFacebook = function () {
 User.loginWithVkontakte = function () {
 	return new Promise((resolve, reject)=>{
 		SocialProvider.vkontakteLogin()
-			.then((user)=>{
-				return User.setCurrent(user);
-			})
-			.then((user)=>{
-				return user.save();
-			})
+			.then(User.resolveWithServer)
+			.then(User.setCurrent)
+			.then(User.saveUser)
 			.then(resolve, reject)
 	})
 };
@@ -90,12 +129,9 @@ User.loginWithVkontakte = function () {
 User.loginWithTwitter = function (t) {
 	return new Promise((resolve, reject)=>{
 		SocialProvider.twitterLogin()
-			.then((user)=>{
-				return User.setCurrent(user);
-			})
-			.then((user)=>{
-				return user.save();
-			})
+			.then(User.resolveWithServer)
+			.then(User.setCurrent)
+			.then(User.saveUser)
 			.then(resolve, reject)
 	})
 };

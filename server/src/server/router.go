@@ -364,7 +364,13 @@ func (p *Router) Social(w http.ResponseWriter, r *http.Request) {
 	}
 
 	RecordSession(w, session)
-	SuccessJSON(w, user)
+	SuccessJSON(w, struct {
+		User *User
+		Session *Session
+	}{
+		User: user,
+		Session: session,
+	})
 }
 
 func (p *Router) Logout(w http.ResponseWriter, r *http.Request) {
