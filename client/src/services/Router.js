@@ -46,9 +46,21 @@ module.exports = {
 		return req
 	},
 
-	results : ()=>{
+	results : (page, limit)=>{
 		var req = NewURLRequest();
 		req.setPath("/results");
+		return req
+	},
+
+	users : (page, limit)=>{
+		var req = NewURLRequest();
+		req.setPath("/results");
+		return req
+	},
+
+	table : (page, limit)=>{
+		var req = NewURLRequest();
+		req.setPath("/table");
 		return req
 	},
 
@@ -69,5 +81,25 @@ module.exports = {
 		return req
 	},
 
+	updater : ()=>{
+		var req = NewURLRequest();
+		req.setPath("/updater");
+		return req
+	},
 
-}
+	exportBy : (format) => {
+		format = format || "xlsx";
+
+		var req = NewURLRequest();
+		req.setMethod("GET");
+		req.setPath("/export");
+		req.setBody("format", format);
+		return req
+	},
+
+	lecture : () => {
+		var req = NewURLRequest();
+		req.setPath("/data");
+		return req
+	}
+};

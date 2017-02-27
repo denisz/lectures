@@ -1,4 +1,16 @@
 .b-admin {
   flex: 1;
-  overflow-y:scroll;
+  display: flex;
+  flex-direction: column;
+
+  .container.header {
+    flex-basis: 44px;
+    flex-grow: 0;
+    overflow: hidden;
+  }
+
+  .container {
+    flex: 1;
+    overflow-y:scroll;
+  }
 }

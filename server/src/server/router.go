@@ -21,6 +21,7 @@ var (
 	ErrPassSessionId   = errors.New("Passing request sessionId")
 	ErrEnoughArguments = errors.New("Not enough arguments")
 	ErrForbidden       = errors.New("Forbidden")
+	ErrUnsupported	   = errors.New("Unsupported Format")
 	HeaderSessionKey   = "Application-Session-ID"
 	CookieSessionKey   = "SessionID"
 	PacketFilePath     = "data.zip"
@@ -37,12 +38,16 @@ func NewRouter (config *Config, storage *Storage) *Router{
 	serve.Handle("/logout",  	http.HandlerFunc(router.Logout))
 	serve.Handle("/result",  	http.HandlerFunc(router.SaveResult))
 	serve.Handle("/results", 	http.HandlerFunc(router.GetResults))
-	serve.Handle("/table", 	 	http.HandlerFunc(router.GetTable))
 	serve.Handle("/access",  	http.HandlerFunc(router.TakeAdminAccess))
 	serve.Handle("/note",    	http.HandlerFunc(router.SaveNote))
 	serve.Handle("/notes",   	http.HandlerFunc(router.GetNotes))
 	serve.Handle("/updater", 	http.HandlerFunc(router.Updater))
 	serve.Handle("/data", 	 	http.HandlerFunc(router.GetData))
+
+	serve.Handle("/table", 	 	http.HandlerFunc(router.Table))
+	serve.Handle("/export", 	 	http.HandlerFunc(router.Export))
+
+	serve.Handle("/users",  		http.HandlerFunc(router.GetUsers))
 
 	router.Serve 	= serve
 	router.Config 	= config
@@ -127,7 +132,7 @@ func (p *Router) User(w http.ResponseWriter, r *http.Request) {
 
 	id := r.FormValue("id")
 	if len(id) == 0 {
-		BadRequest(w, ErrEnoughArguments)
+		SuccessJSON(w, []User{})
 		return
 	}
 
@@ -290,7 +295,52 @@ func (p *Router) GetNotes(w http.ResponseWriter, r *http.Request) {
 	SuccessJSON(w, results)
 }
 
-func (p *Router) GetTable(w http.ResponseWriter, r *http.Request) {
+
+func (p *Router) Export (w http.ResponseWriter, r *http.Request) {
+	//user := NewUser()
+	//
+	//if err := p.TakeUser(user, r); err != nil {
+	//	BadRequest(w, err)
+	//	return
+	//}
+	//
+	//if err := RequiredAdmin(user); err != nil {
+	//	BadRequest(w, err)
+	//	return
+	//}
+
+	format := r.FormValue("format")
+
+	if len(format) == 0 {
+		BadRequest(w, ErrEnoughArguments)
+		return
+	}
+
+	results, err := p.Storage.LoadAllResults()
+
+	if err != nil {
+		BadRequest(w, err)
+		return
+	}
+
+	switch format {
+	case "xlsx":
+		path, err := ExportByXLSX(results)
+		if err != nil {
+			BadRequest(w, err)
+			return
+		}
+
+		fmt.Printf("Export: %s \n", path)
+
+		http.ServeFile(w, r, path)
+		break
+	default:
+		BadRequest(w, ErrUnsupported)
+	}
+}
+
+func (p *Router) Table(w http.ResponseWriter, r *http.Request) {
 	user := NewUser()
 
 	if err := p.TakeUser(user, r); err != nil {
@@ -311,6 +361,29 @@ func (p *Router) GetTable(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SuccessJSON(w, results)
+}
+
+func (p *Router) GetUsers(w http.ResponseWriter, r *http.Request) {
+	user := NewUser()
+
+	if err := p.TakeUser(user, r); err != nil {
+		BadRequest(w, err)
+		return
+	}
+
+	if err := RequiredAdmin(user); err != nil {
+		BadRequest(w, err)
+		return
+	}
+
+	users, err := p.Storage.LoadAllUsers()
+
+	if err != nil {
+		BadRequest(w, err)
+		return
+	}
+
+	SuccessJSON(w, users)
 }
 
 func (p *Router) GetData (w http.ResponseWriter, r *http.Request) {

@@ -260,9 +260,8 @@ func (p *Storage) LoadAllResults() ([]Result, error) {
 		root := tx.Bucket(BktResults)
 		c := root.Cursor()
 
-		result := NewResult()
-
 		for k, v := c.First(); k != nil; k, v = c.Next() {
+			result := NewResult()
 			if err := json.Unmarshal(v, result); err == nil {
 				results = append(results, *result)
 			}
@@ -272,6 +271,27 @@ func (p *Storage) LoadAllResults() ([]Result, error) {
 	})
 
 	return results, err
+}
+
+func (p *Storage) LoadAllUsers() ([]User, error) {
+	users := []User{}
+
+	err := p.DB.View(func(tx *bolt.Tx) error {
+		root := tx.Bucket(BktUsers)
+		c := root.Cursor()
+
+		user := NewUser()
+
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			if err := json.Unmarshal(v, user); err == nil {
+				users = append(users, *user)
+			}
+		}
+
+		return nil
+	})
+
+	return users, err
 }
 
 func (p *Storage) SaveNote(note *Note) error {

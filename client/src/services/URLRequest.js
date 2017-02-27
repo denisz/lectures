@@ -12,6 +12,12 @@ var URLRequest = function (url) {
 
 URLRequest.baseURL = "http://localhost:8083";
 
+var urldecode = function (params) {
+	return Object.keys(params).map((key) => {
+		return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+	}).join('&');
+};
+
 var proto = URLRequest.prototype;
 
 proto.absoluteString = function () {
@@ -27,6 +33,10 @@ proto.method = function () {
 	return this._method;
 };
 
+proto.setMethod = function (method) {
+	this._method = method;
+};
+
 proto.setEncode = function (type) {
 	this._encode = type;
 	return this;
@@ -39,9 +49,7 @@ proto.body = function () {
 		case 'json':
 			return JSON.stringify(params);
 		case 'urlencoded':
-			return Object.keys(params).map((key) => {
-				return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-			}).join('&');
+			return urldecode(params);
 	}
 };
 
@@ -71,6 +79,16 @@ proto.setBody = function (key, value) {
 proto.setHeader = function (key, value) {
 	this._headers[key] = value;
 	return this;
+};
+
+proto.url = function () {
+	var absouluteUrl = this.absoluteString();
+	if (this._method == "GET") {
+		var urlparams = urldecode(this._body);
+		return `${absouluteUrl}?${urlparams}`
+	}
+
+	return absouluteUrl
 };
 
 module.exports = function (url) {

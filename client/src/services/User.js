@@ -59,12 +59,13 @@ User.setCurrent = function (user) {
 	return new Promise((resolve, reject)=>{
 		current = new User();
 
-		current.id 		 = user.id;
-		current.name 	 = user.name;
-		current.picture  = user.picture;
-		current.socialId = user.socialId;
-		current.provider = user.provider;
-		current.admin 	 = user.admin;
+		current.id 		  = user.id;
+		current.name 	  = user.name;
+		current.picture   = user.picture;
+		current.socialId  = user.socialId;
+		current.provider  = user.provider;
+		current.admin 	  = user.admin;
+		current.sessionID = user.sessionID;
 
 		console.log("user:", user);
 		resolve(current);
@@ -81,11 +82,13 @@ User.resolveWithServer = function (user) {
 
 	return fetch(request)
 		.then((res)=>{
+			console.log(user);
 			if (res.Session) {
 				User.SetCurrentSessionId(res.Session.ID);
+				user.sessionID 	= res.Session.ID;
 			}
-			user.id 	= res.User.ID;
-			user.admin 	= res.User.Admin;
+			user.id 		= res.User.ID;
+			user.admin 		= res.User.Admin;
 
 			return user;
 		})

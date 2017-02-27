@@ -21,6 +21,7 @@ module.exports = withRouter(React.createClass({
 
 		}
 	},
+
 	render () {
 		var user = User.current();
 
@@ -40,7 +41,10 @@ module.exports = withRouter(React.createClass({
 							<Nav pullRight onSelect={this.handlerSelectMenu}>
 								<NavDropdown title={user.name} id="basic-nav-dropdown">
 									<MenuItem eventKey="profile">Профиль</MenuItem>
-									<MenuItem eventKey="admin">Админ панель</MenuItem>
+									{
+										user.admin
+										&& <MenuItem eventKey="admin">Админ панель</MenuItem>
+									}
 									<MenuItem eventKey="settings">Настройки</MenuItem>
 									<MenuItem divider />
 									<MenuItem eventKey="logout">Выход</MenuItem>

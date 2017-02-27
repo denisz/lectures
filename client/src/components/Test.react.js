@@ -6,6 +6,7 @@ var Page = require('./Page.react');
 var {withRouter} = require('react-router');
 var {Button, Modal} = require('react-bootstrap');
 var Control = require('./TestControl.react');
+var Result = require('./../services/Result');
 
 module.exports = withRouter(React.createClass({
 	displayName: "lecture",
@@ -15,7 +16,9 @@ module.exports = withRouter(React.createClass({
 		var test = lecture.test;
 		return {
 			reachEnd 	: false,
-			answers 	: {},
+			answers 	: new Result({
+				lectureId: lecture.id
+			}),
 			showModal   : false,
 			test 		: test,
 			pagination 	: new Pagination(test.items, this)
@@ -34,7 +37,7 @@ module.exports = withRouter(React.createClass({
 
 					<Modal show={this.state.showModal} onHide={this.handleClose}>
 						<Modal.Header closeButton>
-							<Modal.Title>Modal heading</Modal.Title>
+							<Modal.Title>Результат</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
 							<h4>Тест пройден</h4>
@@ -62,9 +65,15 @@ module.exports = withRouter(React.createClass({
 	},
 
 	fixAnswer (answer) {
-		var current = this.state.pagination.current();
-		var answers = this.state.answers;
-		answers[current.id] = answer;
+		var pagination 	= this.state.pagination;
+		var current 	= this.state.pagination.current();
+		var answers 	= this.state.answers;
+
+		answers.push({
+			id 		: current.id,
+			index 	: pagination.index,
+			value 	: JSON.stringify(answer)
+		});
 
 		this.setState({
 			answers: answers
@@ -72,7 +81,12 @@ module.exports = withRouter(React.createClass({
 	},
 
 	handleClose() {
-		this.props.router.push("/");
+		var answers = this.state.answers;
+		answers.save().then(()=>{
+			this.props.router.push("/");
+		}, ()=>{
+			this.props.router.push("/");
+		})
 	},
 
 	handleChange (answer) {

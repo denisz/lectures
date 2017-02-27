@@ -24,6 +24,11 @@ type Result struct {
 	Created time.Time
 }
 
+
+func CellsForResults () []string {
+	return []string{"test"}
+}
+
 func NewResultData() *ResultData{
 	data := ResultData{}
 	data.Answers = []ResultDataAnswer{}
