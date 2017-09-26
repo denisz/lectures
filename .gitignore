@@ -5,3 +5,6 @@ dist/bundle.js
 client/dist/
 client/release/
 electron.js
+server/src/github.com/
+server/src/gopkg.in
+
